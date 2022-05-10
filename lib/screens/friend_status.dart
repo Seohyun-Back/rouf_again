@@ -17,26 +17,26 @@ class _FriendStatusState extends State<FriendStatus> {
     print('\n \n currentUid는 지금 ${globals.currentUid}');
     print('\n \n currentUsername은 지금 ${globals.currentUsername}');
     print('\n \n currentEmail은 지금 ${globals.currentEmail}');
-    return Expanded(
-      child: Container(
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-          child: Column(
-            children: [
-              StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('user/${globals.currentUid}/friends')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                        snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  final docs = snapshot.data!.docs;
+    return Container(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        child: Column(
+          children: [
+            StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('user/${globals.currentUid}/friends')
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final docs = snapshot.data!.docs;
 
-                  return ListView.builder(
+                return Container(
+                  height: 218,
+                  child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: docs.length,
@@ -53,11 +53,11 @@ class _FriendStatusState extends State<FriendStatus> {
                         title: Text(docs[index]['name']),
                       ));
                     },
-                  );
-                },
-              )
-            ],
-          )),
-    );
+                  ),
+                );
+              },
+            )
+          ],
+        ));
   }
 }
