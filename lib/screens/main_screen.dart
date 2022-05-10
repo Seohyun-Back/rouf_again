@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:gw/models/timed_event.dart';
 import 'package:gw/models/timer_service.dart';
+import 'package:gw/screens/friend_status.dart';
 import 'package:gw/screens/sidebar/friend_list.dart';
 import 'package:gw/screens/sidebar/friend_request.dart';
 import 'package:gw/screens/monthly.dart';
@@ -63,6 +64,16 @@ class _MainScreenState extends State<MainScreen> {
         await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
 
     return await loggedUser!.email.toString();
+  }
+
+  Future<String> getUID() async {
+    User user = await _authentication.currentUser!;
+    final _userData =
+        await FirebaseFirestore.instance.collection('user').doc(user.uid).get();
+    globals.currentUsername = _userData.data()!['userName'];
+    globals.currentUid = _userData.data()!['userUID'];
+    globals.currentEmail = _userData.data()!['email'];
+    return _userData.data()!['userUID'];
   }
 
   Future<int> getFriendNum() async {
@@ -388,6 +399,7 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(
               height: 10,
             ),
+
             Container(
               height: 220,
               width: 330,
@@ -396,12 +408,19 @@ class _MainScreenState extends State<MainScreen> {
                   color: Colors.black,
                 ),
               ),
-              child: new GestureDetector(
-                onTap: () {
-                  print('globals.currentUid: ${globals.currentUid}');
-                },
-                child: new Text("친구 상태창"),
-              ),
+              child: FutureBuilder(
+                  future: getUID(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData == false) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text(
+                        'Error: ${snapshot.error}',
+                      );
+                    } else {
+                      return FriendStatus();
+                    } //Text(snapshot.data.toString());
+                  }),
             ),
             Text(
               "See \n statusKey: ${globals.statusKey} \n count: \n",
