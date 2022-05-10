@@ -26,6 +26,8 @@ void initGlobals() {
 }
 
 List<String> tasks = ["공부", "운동", "잠자기", "일하기", "놀기", "이동", "밥먹기", "직접 추가"];
+
+int actionKey = 8;
 List<String> action = [
   "공부하는 중..",
   "운동하는 중..",

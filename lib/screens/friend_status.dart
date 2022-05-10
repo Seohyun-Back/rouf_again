@@ -41,17 +41,40 @@ class _FriendStatusState extends State<FriendStatus> {
                     shrinkWrap: true,
                     itemCount: docs.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                          //padding:,
-                          child: ListTile(
-                        // 친구 프로필사진
-                        leading: Icon(
-                          Icons.circle,
-                          color: Colors.grey[850],
-                        ),
-                        // 친구 이름
-                        title: Text(docs[index]['name']),
-                      ));
+                      return StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('user')
+                              .doc('${docs[index]['uid']}')
+                              .snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<
+                                      DocumentSnapshot<Map<String, dynamic>>>
+                                  snapshot2) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            final int actionKey = snapshot2.data!['statusKey'];
+
+                            return Container(
+                                //padding:,
+                                child: ListTile(
+                              // 친구 프로필사진
+                              leading: Icon(
+                                Icons.circle,
+                                size: 20.0,
+                                color: Colors.grey[850],
+                              ),
+                              // 친구 이름
+                              title: Text(
+                                  docs[index]['name'] +
+                                      '는 ' +
+                                      globals.action[actionKey],
+                                  style: TextStyle(fontSize: 20)),
+                            ));
+                          });
                     },
                   ),
                 );
