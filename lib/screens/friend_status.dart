@@ -11,6 +11,7 @@ class FriendStatus extends StatefulWidget {
 
 class _FriendStatusState extends State<FriendStatus> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  int actionKey = 8;
 
   @override
   Widget build(BuildContext context) {
@@ -56,16 +57,21 @@ class _FriendStatusState extends State<FriendStatus> {
                                 child: CircularProgressIndicator(),
                               );
                             }
-                            final int actionKey = snapshot2.data!['statusKey'];
+                            actionKey = snapshot2.data!['statusKey'];
 
                             return Container(
                                 //padding:,
                                 child: ListTile(
+                              horizontalTitleGap: 2.0,
+                              dense: true,
                               // 친구 프로필사진
-                              leading: Icon(
-                                Icons.circle,
-                                size: 20.0,
-                                color: Colors.grey[850],
+                              leading: CircleAvatar(
+                                backgroundColor: Color(0xff95DF7D),
+                                child: Image.asset(
+                                  'images/TaskIcon/${globals.tasks[actionKey]}.png',
+                                  height: 23,
+                                  width: 23,
+                                ),
                               ),
                               // 친구 이름
                               title: Text(

@@ -79,6 +79,9 @@ flutter:
     - images/TaskIcon/일하기.png
     - images/TaskIcon/밥먹기.png
     - images/TaskIcon/직접 추가.png
+    - images/TaskIcon/숨쉬기.png
+    
+
   fonts:
     - family: rouf-font
       fonts:
