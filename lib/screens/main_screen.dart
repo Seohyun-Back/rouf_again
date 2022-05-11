@@ -230,6 +230,7 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       endDrawer: Drawer(
+        backgroundColor: Color.fromARGB(255, 247, 247, 247),
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -268,8 +269,9 @@ class _MainScreenState extends State<MainScreen> {
                                       return Text(
                                         snapshot.data.toString(),
                                         style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'nanum-gothic',
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ); //Text(snapshot.data.toString());
                                     }
@@ -287,8 +289,10 @@ class _MainScreenState extends State<MainScreen> {
                                     } else {
                                       return Text(snapshot.data.toString(),
                                           style: TextStyle(
-                                              //color: Colors.white,
-                                              ));
+                                            fontFamily: 'nanum-gothic',
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w400,
+                                          ));
                                     }
                                   }),
                             ],
@@ -314,6 +318,7 @@ class _MainScreenState extends State<MainScreen> {
                             '친구 ',
                             style: TextStyle(
                               fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           FutureBuilder(
@@ -328,6 +333,7 @@ class _MainScreenState extends State<MainScreen> {
                                   return Text(snapshot.data.toString(),
                                       style: TextStyle(
                                         fontSize: 16,
+                                        fontWeight: FontWeight.w600,
                                       ));
                                 }
                               }),
@@ -336,10 +342,10 @@ class _MainScreenState extends State<MainScreen> {
                 ],
               )),
               decoration: BoxDecoration(
-                  color: Colors.green[200],
+                  color: Color.fromARGB(255, 255, 255, 255),
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20.0),
-                    bottomRight: Radius.circular(20.0),
+                    bottomLeft: Radius.circular(0.0),
+                    bottomRight: Radius.circular(0.0),
                   )),
             ),
             ListTile(
@@ -347,7 +353,11 @@ class _MainScreenState extends State<MainScreen> {
                 Icons.favorite,
                 color: Colors.grey[850],
               ),
-              title: Text('친구'),
+              title: Text('친구 신청',
+                  style: TextStyle(
+                    fontFamily: 'nanum-gothic',
+                    fontWeight: FontWeight.w600,
+                  )),
               onTap: () {
                 print("친구 is clicked");
                 Navigator.push(
@@ -363,7 +373,11 @@ class _MainScreenState extends State<MainScreen> {
                 Icons.settings,
                 color: Colors.grey[850],
               ),
-              title: Text('설정'),
+              title: Text('설정',
+                  style: TextStyle(
+                    fontFamily: 'nanum-gothic',
+                    fontWeight: FontWeight.w600,
+                  )),
               onTap: () {
                 print("Setting is clicked");
               },
@@ -373,7 +387,11 @@ class _MainScreenState extends State<MainScreen> {
                 Icons.exit_to_app,
                 color: Colors.grey[850],
               ),
-              title: Text('로그아웃'),
+              title: Text('로그아웃',
+                  style: TextStyle(
+                    fontFamily: 'nanum-gothic',
+                    fontWeight: FontWeight.w600,
+                  )),
               onTap: () {
                 globals.initGlobals();
                 FirebaseAuth.instance.signOut();

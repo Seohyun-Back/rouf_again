@@ -52,15 +52,6 @@ class _printSearchedFriendState extends State<printSearchedFriend> {
                 trailing: IconButton(
                     onPressed: () async {
                       print("친구 추가");
-
-                      // DocumentReference docRef = FirebaseFirestore.instance
-                      //     .collection('user')
-                      //     .doc(globals.friendUid);
-                      // DocumentSnapshot doc = await docRef.get();
-                      // //List requests = doc.data['requests'];
-                      // docRef.update({
-                      //   'requests': FieldValue.arrayUnion([globals.currentUid])
-                      // });
                       FirebaseFirestore.instance
                           .collection('user/${globals.friendUid}/requests')
                           .doc(globals.currentEmail)

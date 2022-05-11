@@ -67,7 +67,8 @@ class _FriendStatusState extends State<FriendStatus> {
                               // 친구 프로필사진
                               leading: CircleAvatar(
                                 radius: 18,
-                                backgroundColor: Color(0xff95DF7D),
+                                backgroundColor:
+                                    Color.fromARGB(255, 201, 227, 192),
                                 child: Image.asset(
                                   'images/TaskIcon/${globals.tasks[actionKey]}.png',
                                   height: 20,

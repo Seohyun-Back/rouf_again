@@ -88,6 +88,16 @@ flutter:
     - family: rouf-font
       fonts:
         - asset: fonts/rouf-font/GowunDodum-Regular.ttf
+    - family: nanum-gothic
+      fonts:
+        - asset: fonts/nanum-gothic/NanumGothic.ttf
+        - asset: fonts/nanum-gothic/NanumGothicBold.ttf
+          weight: 200
+        - asset: fonts/nanum-gothic/NanumGothicExtraBold.ttf
+          weight: 300
+        - asset: fonts/nanum-gothic/NanumGothicLight.ttf
+          weight: 400
+
 
 
 
