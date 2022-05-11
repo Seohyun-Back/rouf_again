@@ -62,15 +62,16 @@ class _FriendStatusState extends State<FriendStatus> {
                             return Container(
                                 //padding:,
                                 child: ListTile(
-                              horizontalTitleGap: 2.0,
+                              horizontalTitleGap: 6.0,
                               dense: true,
                               // 친구 프로필사진
                               leading: CircleAvatar(
+                                radius: 18,
                                 backgroundColor: Color(0xff95DF7D),
                                 child: Image.asset(
                                   'images/TaskIcon/${globals.tasks[actionKey]}.png',
-                                  height: 23,
-                                  width: 23,
+                                  height: 20,
+                                  width: 20,
                                 ),
                               ),
                               // 친구 이름
@@ -78,7 +79,7 @@ class _FriendStatusState extends State<FriendStatus> {
                                   docs[index]['name'] +
                                       '는 ' +
                                       globals.action[actionKey],
-                                  style: TextStyle(fontSize: 20)),
+                                  style: TextStyle(fontSize: 18)),
                             ));
                           });
                     },
