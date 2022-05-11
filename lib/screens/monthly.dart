@@ -29,6 +29,7 @@ class _MonthlyWorkState extends State<MonthlyWork> {
                   child: CalendarCarousel<Event>(
                     onDayPressed: (DateTime date, List<Event> events) {
                       this.setState(() => selectedDate = date);
+                      print('selected date is : ${selectedDate}');
                     },
                     thisMonthDayBorderColor: Colors.transparent,
                     headerTextStyle: TextStyle(
