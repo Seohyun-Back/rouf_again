@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: primaryGreen,
-        fontFamily: 'nanum-gothic',
+        fontFamily: 'Mono',
       ),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),

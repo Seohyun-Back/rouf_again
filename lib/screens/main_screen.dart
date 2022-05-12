@@ -262,20 +262,23 @@ class _MainScreenState extends State<MainScreen> {
               child: Container(
                   child: Column(
                 children: [
+                  SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        flex: 2,
+                      Container(
+                        //flex: 2,
                         child: CircleAvatar(
-                          radius: 50,
+                          radius: 27,
                           backgroundImage: AssetImage('images/profile.jpg'),
                         ),
                       ),
-                      Expanded(
-                        flex: 8,
+                      Container(
+                        //flex: 8,
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(10, 25, 0, 0),
+                          padding: EdgeInsets.fromLTRB(10, 6, 0, 30),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -293,7 +296,7 @@ class _MainScreenState extends State<MainScreen> {
                                       return Text(
                                         snapshot.data.toString(),
                                         style: TextStyle(
-                                          fontFamily: 'nanum-gothic',
+                                          fontFamily: 'Mono',
                                           fontSize: 20,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -313,9 +316,9 @@ class _MainScreenState extends State<MainScreen> {
                                     } else {
                                       return Text(snapshot.data.toString(),
                                           style: TextStyle(
-                                            fontFamily: 'nanum-gothic',
+                                            fontFamily: 'Mono',
                                             fontSize: 17,
-                                            fontWeight: FontWeight.w400,
+                                            fontWeight: FontWeight.w300,
                                           ));
                                     }
                                   }),
@@ -335,33 +338,36 @@ class _MainScreenState extends State<MainScreen> {
                         }),
                       );
                     },
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            '친구 ',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              '친구 ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                          FutureBuilder(
-                              future: getFriendNum(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot snapshot) {
-                                if (snapshot.hasError) {
-                                  return Text(
-                                    'Error: ${snapshot.error}',
-                                  );
-                                } else {
-                                  return Text(snapshot.data.toString(),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ));
-                                }
-                              }),
-                        ]),
+                            FutureBuilder(
+                                future: getFriendNum(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text(
+                                      'Error: ${snapshot.error}',
+                                    );
+                                  } else {
+                                    return Text(snapshot.data.toString(),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ));
+                                  }
+                                }),
+                          ]),
+                    ),
                   ),
                 ],
               )),
@@ -379,8 +385,8 @@ class _MainScreenState extends State<MainScreen> {
               ),
               title: Text('친구 신청',
                   style: TextStyle(
-                    fontFamily: 'nanum-gothic',
-                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Mono',
+                    fontWeight: FontWeight.w500,
                   )),
               onTap: () {
                 print("친구 is clicked");
@@ -399,8 +405,8 @@ class _MainScreenState extends State<MainScreen> {
               ),
               title: Text('설정',
                   style: TextStyle(
-                    fontFamily: 'nanum-gothic',
-                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Mono',
+                    fontWeight: FontWeight.w500,
                   )),
               onTap: () {
                 print("Setting is clicked");
@@ -413,8 +419,8 @@ class _MainScreenState extends State<MainScreen> {
               ),
               title: Text('로그아웃',
                   style: TextStyle(
-                    fontFamily: 'nanum-gothic',
-                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Mono',
+                    fontWeight: FontWeight.w500,
                   )),
               onTap: () {
                 globals.initGlobals();
@@ -453,7 +459,11 @@ class _MainScreenState extends State<MainScreen> {
                   future: getUID(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData == false) {
-                      return CircularProgressIndicator();
+                      return SizedBox(
+                        height: 0,
+                        width: 0,
+                      );
+                      // CircularProgressIndicator();
                     } else if (snapshot.hasError) {
                       return Text(
                         'Error: ${snapshot.error}',
@@ -462,10 +472,6 @@ class _MainScreenState extends State<MainScreen> {
                       return FriendStatus();
                     } //Text(snapshot.data.toString());
                   }),
-            ),
-            SizedBox(
-              height: 5,
-              width: 330,
             ),
             SafeArea(
               child: TaskList(),

@@ -29,9 +29,13 @@ class _FriendStatusState extends State<FriendStatus> {
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
+                  return SizedBox(
+                    height: 0,
+                    width: 0,
                   );
+                  // Center(
+                  //   child: CircularProgressIndicator(),
+                  // );
                 }
                 final docs = snapshot.data!.docs;
 
@@ -53,11 +57,22 @@ class _FriendStatusState extends State<FriendStatus> {
                                   snapshot2) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return Center(
-                                child: CircularProgressIndicator(),
+                              return SizedBox(
+                                height: 0,
+                                width: 0,
+                              );
+                              // Center(
+                              //   child: CircularProgressIndicator(),
+                              // );
+                            }
+                            try {
+                              actionKey = snapshot2.data!['statusKey'];
+                            } catch (e) {
+                              return SizedBox(
+                                height: 0,
+                                width: 0,
                               );
                             }
-                            actionKey = snapshot2.data!['statusKey'];
 
                             return Container(
                                 //padding:,
@@ -80,7 +95,7 @@ class _FriendStatusState extends State<FriendStatus> {
                                   docs[index]['name'] +
                                       '는 ' +
                                       globals.action[actionKey],
-                                  style: TextStyle(fontSize: 18)),
+                                  style: TextStyle(fontSize: 16)),
                             ));
                           });
                     },

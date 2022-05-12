@@ -91,12 +91,29 @@ flutter:
     - family: nanum-gothic
       fonts:
         - asset: fonts/nanum-gothic/NanumGothic.ttf
-        - asset: fonts/nanum-gothic/NanumGothicBold.ttf
-          weight: 200
-        - asset: fonts/nanum-gothic/NanumGothicExtraBold.ttf
-          weight: 300
         - asset: fonts/nanum-gothic/NanumGothicLight.ttf
-          weight: 400
+          weight: 300
+        - asset: fonts/nanum-gothic/NanumGothicBold.ttf
+          weight: 700
+        - asset: fonts/nanum-gothic/NanumGothicExtraBold.ttf
+          weight: 800
+        
+    - family: Mono
+      fonts:
+        - asset: fonts/Mono/IBMPlexMono-Regular.ttf
+        - asset: fonts/Mono/IBMPlexMono-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/Mono/IBMPlexMono-Light.ttf
+          weight: 300
+        - asset: fonts/Mono/IBMPlexMono-Medium.ttf
+          weight: 500
+        - asset: fonts/Mono/IBMPlexMono-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Mono/IBMPlexMono-Bold.ttf
+          weight: 700
+        
+        
+        
 
 
 
