@@ -5,38 +5,63 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 
-var currentUser = FirebaseAuth.instance.currentUser;
+class Todo {
+  final int id; //todo마다의 고유한 ID
+  final String todo; //내가 해야할것
+  bool checked; //해당 todo를 완료 했는지 않았는지 확인하기 위한 용도
 
+  Todo({
+    required this.id,
+    required this.todo,
+    required this.checked,
+  });
+}
+
+var currentUser = FirebaseAuth.instance.currentUser;
 String currentUsername = '';
 String currentUid = '';
 String currentEmail = '';
-String friendUid = '';
 String friendName = '';
+String friendUid = '';
 String friendEmail = '';
 int friendNum = 0;
 
-void initGlobals() {
-  currentUsername = '';
-  currentUid = '';
-  currentEmail = '';
-  friendUid = '';
-  friendName = '';
-  friendEmail = '';
-  friendNum = 0;
-}
-
-List<String> tasks = [
-  "공부",
-  "운동",
-  "잠자기",
-  "일하기",
-  "놀기",
-  "이동",
-  "밥먹기",
-  "직접 추가",
-  "숨쉬기"
+List<String> tasks = ["공부", "운동", "잠자기", "일하기", "놀기", "이동", "밥먹기", "기타", "숨쉬기"];
+//List<AddTask> addTaskList = [];
+List<List<Todo>> todos = [
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+];
+String input = '';
+List<int> taskList = [];
+List<int> eachTaskKey = [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+]; // 각 todo의 갯수..? 인덱스로 쓰려고 만들었던듯
+List<String> eachTaskTimer = [
+  "00:00",
+  "00:00",
+  "00:00",
+  "00:00",
+  "00:00",
+  "00:00",
+  "00:00",
+  "00:00"
 ];
 
+int statusKey = 8; // 기본 숨쉬기 상태
 int actionKey = 8;
 List<String> action = [
   "공부하는 중..",
@@ -50,4 +75,35 @@ List<String> action = [
   "숨 쉬는 중.."
 ];
 
-int statusKey = 8;
+void initGlobals() {
+  currentUsername = '';
+  currentUid = '';
+  currentEmail = '';
+  friendUid = '';
+  friendName = '';
+  friendEmail = '';
+  friendNum = 0;
+  todos = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ];
+  input = '';
+  taskList = [];
+  eachTaskKey = [0, 0, 0, 0, 0, 0, 0, 0];
+  eachTaskTimer = [
+    "00:00",
+    "00:00",
+    "00:00",
+    "00:00",
+    "00:00",
+    "00:00",
+    "00:00",
+    "00:00"
+  ];
+}

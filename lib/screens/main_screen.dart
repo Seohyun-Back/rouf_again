@@ -2,14 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
-import 'package:gw/models/timed_event.dart';
-import 'package:gw/models/timer_service.dart';
+import 'package:gw/component/task_list.dart';
 import 'package:gw/screens/friend_status.dart';
 import 'package:gw/screens/sidebar/friend_list.dart';
 import 'package:gw/screens/sidebar/friend_request.dart';
 import 'package:gw/screens/monthly.dart';
-import 'package:gw/widgets/event_item.dart';
-import 'package:gw/widgets/event_list.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals.dart' as globals;
@@ -29,8 +26,6 @@ class _MainScreenState extends State<MainScreen> {
   User? loggedUser;
   //DocumentSnapshot<Map<String, dynamic>>? userData;
   String? userName;
-
-  get timerService => EventList();
 
   void initState() {
     super.initState();
@@ -127,85 +122,114 @@ class _MainScreenState extends State<MainScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        //dialogContext = context;
+        dialogContext = context;
         // return object of type Dialog
         return AlertDialog(
-            title: new Text("할 일 추가",
-                style: TextStyle(
-                  fontSize: 14,
-                )),
-            //content: new Text("Alert Dialog body"),
-            //content:
-            actions: <Widget>[
+          title: new Text("할 일 추가",
+              style: TextStyle(
+                fontSize: 14,
+              )),
+          //content: new Text("Alert Dialog body"),
+          content: Container(
+              child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
               Container(
-                  child: Column(
-                mainAxisSize: MainAxisSize.min,
+                  child: Row(children: [
+                for (int i = 0; i < 4; i++)
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Column(
+                      children: [
+                        IconButton(
+                            icon: Image.asset(
+                                'images/TaskIcon/${globals.tasks[i]}.png'),
+                            iconSize: 20,
+                            onPressed: () async {
+                              Navigator.pop(dialogContext);
+                              //globals.statusKey = i;
+                              globals.taskList.contains(i)
+                                  ? ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                      content: Text("이미 추가된 카테고리입니다."),
+                                    ))
+                                  : {
+                                      await FirebaseFirestore.instance
+                                          .collection(
+                                              'user/${globals.currentUid}/tasks')
+                                          .doc(i.toString())
+                                          .set({
+                                        'taskKey': i,
+                                        'title': globals.tasks[i],
+                                        'time': "00:00",
+                                        //'todos': Map(),
+                                      }),
+                                      setState(() {
+                                        globals.taskList.add(i);
+                                      }),
+                                    };
+                            }),
+
+                        //print(globals.statusKey);
+                        //setState(() {});
+
+                        //AddTask;
+                        //addDynamic();
+                        //new AddTask();
+                        Text(
+                          globals.tasks[i],
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
+              ])),
+              Row(
                 children: [
-                  Container(
-                      child: Row(children: [
-                    for (int i = 0; i < 4; i++)
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Column(
-                          children: [
-                            IconButton(
+                  for (int i = 4; i < 8; i++)
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Column(
+                        children: [
+                          IconButton(
                               icon: Image.asset(
                                   'images/TaskIcon/${globals.tasks[i]}.png'),
                               iconSize: 20,
-                              onPressed: () {
-                                //Navigator.pop(dialogContext);
-
-                                globals.statusKey = i;
-                                print(globals.statusKey);
-                                Navigator.of(context).pop();
-
-                                // timerService.save();
-                              },
-                            ),
-                            Text(
-                              globals.tasks[i],
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ),
-                  ])),
-                  Row(
-                    children: [
-                      for (int i = 4; i < 8; i++)
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Column(
-                            children: [
-                              IconButton(
-                                icon: Image.asset(
-                                    'images/TaskIcon/${globals.tasks[i]}.png'),
-                                iconSize: 20,
-                                onPressed: () {
-                                  //Navigator.pop(dialogContext);
-
-                                  globals.statusKey = i;
-                                  print(globals.statusKey);
-
-                                  // setState(() {
-                                  //   dynamicList
-                                  //       .add(new AddTask(globals.tasks[i]));
-                                  // });
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              Text(
-                                globals.tasks[i],
-                                style: TextStyle(fontSize: 12),
-                              ),
-                            ],
+                              onPressed: () async {
+                                Navigator.pop(dialogContext);
+                                //globals.statusKey = i;
+                                globals.taskList.contains(i)
+                                    ? ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                        content: Text("이미 추가된 카테고리입니다."),
+                                      ))
+                                    : {
+                                        await FirebaseFirestore.instance
+                                            .collection(
+                                                'user/${globals.currentUid}/tasks')
+                                            .doc(i.toString())
+                                            .set({
+                                          'taskKey': i,
+                                          'title': globals.tasks[i],
+                                          'time': "00:00",
+                                        }),
+                                        setState(() {
+                                          globals.taskList.add(i);
+                                        }),
+                                      };
+                              }),
+                          Text(
+                            globals.tasks[i],
+                            style: TextStyle(fontSize: 12),
                           ),
-                        ),
-                    ],
-                  )
+                        ],
+                      ),
+                    ),
                 ],
-              )),
-            ]);
+              )
+            ],
+          )),
+        );
       },
     );
   }
@@ -417,13 +441,12 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(
               height: 10,
             ),
-
             Container(
               height: 220,
               width: 330,
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Colors.black,
+                  color: Colors.transparent,
                 ),
               ),
               child: FutureBuilder(
@@ -440,19 +463,17 @@ class _MainScreenState extends State<MainScreen> {
                     } //Text(snapshot.data.toString());
                   }),
             ),
-            Text(
-              "See \n statusKey: ${globals.statusKey} \n count: \n",
+            SizedBox(
+              height: 5,
+              width: 330,
             ),
-
-            // Provider(create: (context) => TimerService(), child: EventList()),
-            // ),
+            SafeArea(
+              child: TaskList(),
+            )
           ]),
           // ),
         ),
       ),
-
-      // //BUTTON LOCATION
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
