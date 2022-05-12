@@ -243,14 +243,17 @@ class _MainScreenState extends State<MainScreen> {
         preferredSize: Size.fromHeight(50.0), // AppBar 사이즈 지정
         child: AppBar(
           backgroundColor: Colors.white, // AppBar 색상 지정
-          leading: Image.asset(
-            'images/logo.png',
-            height: 50,
+          leading: Transform.translate(
+            offset: Offset(7, 0),
+            child: Image.asset(
+              'images/logo.png',
+              height: 50,
+            ),
           ),
+
           iconTheme: IconThemeData(color: Color.fromARGB(255, 32, 32, 32)),
           elevation: 0.0,
-
-          centerTitle: true,
+          centerTitle: false,
         ),
       ),
       endDrawer: Drawer(
@@ -439,7 +442,7 @@ class _MainScreenState extends State<MainScreen> {
           }),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
+          padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
           // child: SingleChildScrollView(
           //   scrollDirection: Axis.vertical,
           child: Column(children: [
@@ -447,31 +450,33 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(
               height: 10,
             ),
-            Container(
-              height: 220,
-              width: 330,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.transparent,
+            Center(
+              child: Container(
+                //친구상태창
+                height: 220,
+                width: 330,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.transparent,
+                  ),
                 ),
+                child: FutureBuilder(
+                    future: getUID(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData == false) {
+                        return Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
+                            style: TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.w200));
+                        // CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Text(
+                          'Error: ${snapshot.error}',
+                        );
+                      } else {
+                        return FriendStatus();
+                      } //Text(snapshot.data.toString());
+                    }),
               ),
-              child: FutureBuilder(
-                  future: getUID(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData == false) {
-                      return SizedBox(
-                        height: 0,
-                        width: 0,
-                      );
-                      // CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text(
-                        'Error: ${snapshot.error}',
-                      );
-                    } else {
-                      return FriendStatus();
-                    } //Text(snapshot.data.toString());
-                  }),
             ),
             SafeArea(
               child: TaskList(),

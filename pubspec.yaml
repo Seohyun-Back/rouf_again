@@ -75,9 +75,9 @@ flutter:
     - images/loginlogo.png
     - images/TaskIcon/공부.png
     - images/TaskIcon/운동.png
+    - images/TaskIcon/이동.png
     - images/TaskIcon/놀기.png
     - images/TaskIcon/밥먹기.png
-    - images/TaskIcon/이동.png
     - images/TaskIcon/일하기.png
     - images/TaskIcon/잠자기.png
     - images/TaskIcon/기타.png
