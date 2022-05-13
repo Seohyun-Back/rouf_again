@@ -23,9 +23,6 @@ class _TaskState extends State<Task> {
                 fontWeight: FontWeight.w200,
                 color: Colors.black)),
       );
-      // SizedBox(
-      //   height: 10,
-      // );
     } else {
       return Container(
         child: Column(

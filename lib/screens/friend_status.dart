@@ -57,10 +57,10 @@ class _FriendStatusState extends State<FriendStatus> {
                                   snapshot2) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w200));
+                              return SizedBox(
+                                height: 0,
+                                width: 0,
+                              );
                               // Center(
                               //   child: CircularProgressIndicator(),
                               // );
