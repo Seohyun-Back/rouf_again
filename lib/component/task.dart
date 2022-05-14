@@ -96,7 +96,7 @@ class _TaskState extends State<Task> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                            title: Text("Add Todo"),
+                                            title: Text("투두리스트 추가"),
                                             content: TextField(
                                               onChanged: (String value) {
                                                 globals.input = value;
@@ -184,7 +184,8 @@ class _TaskState extends State<Task> {
                                   visualDensity:
                                       VisualDensity(horizontal: -4.0),
                                   icon: Icon(
-                                    Icons.add_circle_outline,
+                                    Icons.add_task_rounded,
+                                    // Icons.add_circle_outline,
                                     size: 15,
                                   )),
                             ],
