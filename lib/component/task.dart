@@ -13,6 +13,8 @@ class Task extends StatefulWidget {
 }
 
 class _TaskState extends State<Task> {
+  bool timerOngoing = false;
+
   @override
   Widget build(BuildContext context) {
     if (globals.taskList.length == 0) {

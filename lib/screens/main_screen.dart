@@ -464,9 +464,11 @@ class _MainScreenState extends State<MainScreen> {
                     future: getUID(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData == false) {
-                        return Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
-                            style: TextStyle(
-                                fontSize: 10, fontWeight: FontWeight.w200));
+                        return Center(
+                          child: Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
+                              style: TextStyle(
+                                  fontSize: 11, fontWeight: FontWeight.w200)),
+                        );
                         // CircularProgressIndicator();
                       } else if (snapshot.hasError) {
                         return Text(

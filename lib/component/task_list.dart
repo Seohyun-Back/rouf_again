@@ -85,16 +85,39 @@ class _TaskListState extends State<TaskList> {
                                   content: Text("카테고리를 삭제하시겠습니까?"),
                                   actions: <Widget>[
                                     ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.white),
+                                        elevation:
+                                            MaterialStateProperty.all(0.0),
+                                      ),
                                       onPressed: () {
                                         return Navigator.of(context).pop(false);
                                       },
-                                      child: const Text('CANCEL'),
+                                      child: const Text(
+                                        '취소',
+                                        style: TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 131, 130, 130),
+                                        ),
+                                      ),
                                     ),
                                     ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Colors.white),
+                                        elevation:
+                                            MaterialStateProperty.all(0.0),
+                                      ),
                                       onPressed: () {
                                         return Navigator.of(context).pop(true);
                                       },
-                                      child: const Text('DELETE'),
+                                      child: const Text('삭제',
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                          )),
                                     ),
                                   ]);
                             });
