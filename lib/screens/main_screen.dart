@@ -7,6 +7,7 @@ import 'package:gw/screens/friend_status.dart';
 import 'package:gw/screens/sidebar/friend_list.dart';
 import 'package:gw/screens/sidebar/friend_request.dart';
 import 'package:gw/screens/monthly.dart';
+import 'package:gw/screens/sidebar/rouf_settings.dart';
 import 'package:provider/provider.dart';
 
 import '../../globals.dart' as globals;
@@ -412,7 +413,13 @@ class _MainScreenState extends State<MainScreen> {
                     fontWeight: FontWeight.w500,
                   )),
               onTap: () {
-                print("Setting is clicked");
+                print("설정 is clicked");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return RoufSettings();
+                  }),
+                );
               },
             ),
             ListTile(
