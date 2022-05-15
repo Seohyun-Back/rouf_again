@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gw/screens/sidebar/settings_category/notice_board.dart';
 
 class RoufSettings extends StatefulWidget {
   const RoufSettings({Key? key}) : super(key: key);
@@ -75,12 +76,12 @@ class _RoufSettingsState extends State<RoufSettings> {
                 )),
             onTap: () {
               print("공지사항 is clicked");
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) {
-              //     return FriendRequest();
-              //   }),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return NoticeBoard();
+                }),
+              );
             },
           ),
           Divider(),
