@@ -42,9 +42,9 @@ class _printSearchedFriendState extends State<printSearchedFriend> {
           child: Column(
             children: [
               ListTile(
-                leading: Icon(
-                  Icons.circle,
-                  color: Colors.grey[850],
+                leading: CircleAvatar(
+                  radius: 18,
+                  backgroundImage: AssetImage('images/profile.jpg'),
                 ),
                 // 친구 이메일
                 title: Text(globals.friendName),

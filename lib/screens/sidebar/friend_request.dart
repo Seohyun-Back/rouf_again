@@ -133,9 +133,9 @@ class _FriendRequestState extends State<FriendRequest> {
                           //padding:,
                           child: ListTile(
                         // 친구 프로필사진
-                        leading: Icon(
-                          Icons.circle,
-                          color: Colors.grey[850],
+                        leading: CircleAvatar(
+                          radius: 18,
+                          backgroundImage: AssetImage('images/profile.jpg'),
                         ),
                         // 친구 이름
 
@@ -144,6 +144,23 @@ class _FriendRequestState extends State<FriendRequest> {
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            TextButton(
+                              child: Text(
+                                '거절',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                              onPressed: () async {
+                                print("친구 신청 거절");
+                                // 목록에서 해당 data 사라지게
+                                FirebaseFirestore.instance
+                                    .collection(
+                                        'user/${globals.currentUid}/requests')
+                                    .doc(docs[index]['email'])
+                                    .delete();
+                              },
+                            ),
                             TextButton(
                               child: Text("수락"),
                               onPressed: () async {
@@ -196,23 +213,6 @@ class _FriendRequestState extends State<FriendRequest> {
                                 //   );
                                 // }
                                 // print(_userData.data()!['userName']);
-                              },
-                            ),
-                            TextButton(
-                              child: Text(
-                                '거절',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
-                              ),
-                              onPressed: () async {
-                                print("친구 신청 거절");
-                                // 목록에서 해당 data 사라지게
-                                FirebaseFirestore.instance
-                                    .collection(
-                                        'user/${globals.currentUid}/requests')
-                                    .doc(docs[index]['email'])
-                                    .delete();
                               },
                             ),
                           ],

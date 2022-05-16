@@ -5,7 +5,9 @@ import 'package:gw/globals.dart' as globals;
 
 class TodoList extends StatefulWidget {
   final int index;
-  const TodoList({Key? key, required this.index}) : super(key: key);
+  final bool selected;
+  const TodoList({Key? key, required this.index, required this.selected})
+      : super(key: key);
 
   @override
   State<TodoList> createState() => _TodoListState();
@@ -53,6 +55,17 @@ class _TodoListState extends State<TodoList> {
                           id: document.data()['id'],
                           todo: document.data()['todo'],
                           checked: document.data()['checked']));
+
+                  // globals.todos[globals.taskList[widget.index]]
+                  //         [document.data()['id']] =
+                  //     new globals.Todo(
+                  //         id: document.data()['id'],
+                  //         todo: document.data()['todo'],
+                  //         checked: document.data()['checked']);
+                  // globals.taskList.add(document.data()['taskKey']);
+                  // //print(document.data()['time']);
+                  // globals.eachTaskTimer[document.data()['taskKey']] =
+                  //     document.data()['time'];
                 })
               });
       return todoDocument;
@@ -80,7 +93,7 @@ class _TodoListState extends State<TodoList> {
         future: todoFuture,
         builder: (context, snapshot) {
           return Container(
-            color: Color(0xfff4f4f4),
+            color: widget.selected ? Color(0xffD6D6D6) : Color(0xfff4f4f4),
             //child: IgnorePointer(
             child: ListView.builder(
               shrinkWrap: true,

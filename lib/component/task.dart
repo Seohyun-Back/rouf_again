@@ -6,15 +6,15 @@ import 'package:gw/globals.dart' as globals;
 
 class Task extends StatefulWidget {
   final int taskNum;
-  const Task({Key? key, required this.taskNum}) : super(key: key);
+  final bool selected;
+  const Task({Key? key, required this.taskNum, required this.selected})
+      : super(key: key);
 
   @override
   State<Task> createState() => _TaskState();
 }
 
 class _TaskState extends State<Task> {
-  bool timerOngoing = false;
-
   @override
   Widget build(BuildContext context) {
     if (globals.taskList.length == 0) {
@@ -26,6 +26,9 @@ class _TaskState extends State<Task> {
                 color: Colors.black)),
       );
     } else {
+      print(widget.taskNum.toString() +
+          "selected : " +
+          widget.selected.toString());
       return Container(
         child: Column(
           children: [
@@ -36,7 +39,9 @@ class _TaskState extends State<Task> {
                 //height: 150,
 
                 decoration: BoxDecoration(
-                  color: Color(0xfff4f4f4),
+                  color: widget.selected == true
+                      ? Color(0xffD6D6D6)
+                      : Color(0xfff4f4f4),
                   borderRadius: new BorderRadius.only(
                       topLeft: const Radius.circular(20.0),
                       topRight: const Radius.circular(20.0),
@@ -94,7 +99,7 @@ class _TaskState extends State<Task> {
                               IconButton(
                                   // alignment: Alignment.topRight,
                                   onPressed: () {
-                                    print("task add button is clicked");
+                                    //print("task add button is clicked");
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -188,7 +193,6 @@ class _TaskState extends State<Task> {
                                       VisualDensity(horizontal: -4.0),
                                   icon: Icon(
                                     Icons.add_task_rounded,
-                                    // Icons.add_circle_outline,
                                     size: 15,
                                   )),
                             ],
@@ -197,10 +201,14 @@ class _TaskState extends State<Task> {
                         StopwatchPage(
                           index: widget.taskNum,
                           taskKey: globals.taskList[widget.taskNum],
+                          play: widget.selected,
                         ),
                       ],
                     ),
-                    TodoList(index: widget.taskNum),
+                    TodoList(
+                      index: widget.taskNum,
+                      selected: widget.selected,
+                    ),
                   ],
                 ),
               ),
