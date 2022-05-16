@@ -52,7 +52,7 @@ class _TaskListState extends State<TaskList> {
         future: myFuture,
         builder: (context, snapshot) {
           return Container(
-            height: 450,
+            height: 440,
             padding: EdgeInsets.symmetric(vertical: 10),
             color: Colors.white,
             child: Expanded(

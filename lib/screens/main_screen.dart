@@ -7,8 +7,10 @@ import 'package:gw/screens/friend_status.dart';
 import 'package:gw/screens/sidebar/friend_list.dart';
 import 'package:gw/screens/sidebar/friend_request.dart';
 import 'package:gw/screens/monthly.dart';
+import 'package:gw/screens/sidebar/line_diary.dart';
 import 'package:gw/screens/sidebar/rouf_settings.dart';
 import 'package:provider/provider.dart';
+import 'login_screen.dart' as loginscreen;
 
 import '../../globals.dart' as globals;
 
@@ -240,6 +242,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // globals.initGlobals();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -247,14 +250,6 @@ class _MainScreenState extends State<MainScreen> {
         preferredSize: Size.fromHeight(50.0), // AppBar 사이즈 지정
         child: AppBar(
           backgroundColor: Colors.white, // AppBar 색상 지정
-          // leading: Transform.translate(
-          //   offset: Offset(7, 0),
-          //   child: Image.asset(
-          //     'images/logo.png',
-          //     height: 50,
-          //   ),
-          // ),
-
           iconTheme: IconThemeData(color: Color.fromARGB(255, 32, 32, 32)),
           elevation: 0.0,
           centerTitle: false,
@@ -357,22 +352,14 @@ class _MainScreenState extends State<MainScreen> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            FutureBuilder(
-                                future: getFriendNum(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Text(
-                                      'Error: ${snapshot.error}',
-                                    );
-                                  } else {
-                                    return Text(snapshot.data.toString(),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ));
-                                  }
-                                }),
+                            if (globals.currentUid == '')
+                              Text('0',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ))
+                            else if (globals.currentUid != '')
+                              friendNumStreamBuilder(),
                           ]),
                     ),
                   ),
@@ -401,6 +388,26 @@ class _MainScreenState extends State<MainScreen> {
                   context,
                   MaterialPageRoute(builder: (context) {
                     return FriendRequest();
+                  }),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.edit_rounded,
+                color: Colors.grey[850],
+              ),
+              title: Text('한 줄 일기',
+                  style: TextStyle(
+                    fontFamily: 'Mono',
+                    fontWeight: FontWeight.w500,
+                  )),
+              onTap: () {
+                print("한 줄 일기 is clicked");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return LineDiary();
                   }),
                 );
               },
@@ -500,5 +507,31 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
     );
+  }
+
+  StreamBuilder<QuerySnapshot<Map<String, dynamic>>> friendNumStreamBuilder() {
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('user/${globals.currentUid}/friends')
+            .snapshots(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasError) {
+            return Text(
+              'Error: ${snapshot.error}',
+            );
+          }
+
+          final docs = snapshot.data!.docs;
+          return Text(docs.length.toString(),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ));
+        });
   }
 }
