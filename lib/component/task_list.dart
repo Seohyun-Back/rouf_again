@@ -52,7 +52,7 @@ class _TaskListState extends State<TaskList> {
         future: myFuture,
         builder: (context, snapshot) {
           return Container(
-            height: 370,
+            height: 450,
             padding: EdgeInsets.symmetric(vertical: 10),
             color: Colors.white,
             child: Expanded(
@@ -74,7 +74,7 @@ class _TaskListState extends State<TaskList> {
                     return Dismissible(
                       key: Key(globals.taskList[index].toString()),
                       child: Task(taskNum: index),
-                      background: Container(color: Colors.lightGreen[200]),
+                      background: Container(color: Colors.white),
                       confirmDismiss: (direction) {
                         //if(direction == DismissDirection.endToStart){
                         return showDialog(

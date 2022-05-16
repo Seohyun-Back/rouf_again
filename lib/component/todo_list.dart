@@ -53,17 +53,6 @@ class _TodoListState extends State<TodoList> {
                           id: document.data()['id'],
                           todo: document.data()['todo'],
                           checked: document.data()['checked']));
-
-                  // globals.todos[globals.taskList[widget.index]]
-                  //         [document.data()['id']] =
-                  //     new globals.Todo(
-                  //         id: document.data()['id'],
-                  //         todo: document.data()['todo'],
-                  //         checked: document.data()['checked']);
-                  // globals.taskList.add(document.data()['taskKey']);
-                  // //print(document.data()['time']);
-                  // globals.eachTaskTimer[document.data()['taskKey']] =
-                  //     document.data()['time'];
                 })
               });
       return todoDocument;
@@ -118,16 +107,10 @@ class _TodoListState extends State<TodoList> {
                               //     .toString())
                               .set({
                             'id': globals
-                                .todos[globals.taskList[widget.index]][
-                                    globals.eachTaskKey[
-                                            globals.taskList[widget.index]] -
-                                        1]
+                                .todos[globals.taskList[widget.index]][index]
                                 .id,
                             'todo': globals
-                                .todos[globals.taskList[widget.index]][
-                                    globals.eachTaskKey[
-                                            globals.taskList[widget.index]] -
-                                        1]
+                                .todos[globals.taskList[widget.index]][index]
                                 .todo,
                             'checked': newValue
                           });

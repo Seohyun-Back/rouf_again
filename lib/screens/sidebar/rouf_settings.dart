@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gw/screens/sidebar/settings_category/faq_board.dart';
 import 'package:gw/screens/sidebar/settings_category/notice_board.dart';
 
 class RoufSettings extends StatefulWidget {
@@ -102,12 +103,12 @@ class _RoufSettingsState extends State<RoufSettings> {
                 )),
             onTap: () {
               print("FAQ is clicked");
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) {
-              //     return FriendRequest();
-              //   }),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return FaqBoard();
+                }),
+              );
             },
           ),
           Divider(),

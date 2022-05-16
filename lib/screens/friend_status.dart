@@ -97,7 +97,7 @@ class _FriendStatusState extends State<FriendStatus> {
                                   radius: 18,
                                   backgroundColor: isBreathing
                                       ? Colors.transparent
-                                      : Color.fromARGB(255, 201, 227, 192),
+                                      : Color(0xffddeacf),
                                   child: Image.asset(
                                     'images/TaskIcon/${globals.tasks[actionKey]}.png',
                                     height: isBreathing ? 21 : 20,
