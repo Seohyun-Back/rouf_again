@@ -1,10 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-//import 'package:flutterfire_ui/auth.dart';
-
-import 'package:gw/screens/main_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:gw/screens/login_screen.dart';
+import 'screens/main_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'globals.dart' as globals;
+//import 'profileSet.dart';
+
+//DateTime today = DateTime.now();
 
 const MaterialColor primaryGreen = MaterialColor(
   _greenPrimaryValue,
@@ -24,9 +27,8 @@ const MaterialColor primaryGreen = MaterialColor(
 const int _greenPrimaryValue = 0xFF47992A;
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); //use firebase auth
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   runApp(MyApp());
 }
 
@@ -35,72 +37,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: primaryGreen,
-        fontFamily: 'Mono',
-      ),
-      home: StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return MainScreen();
-          }
-          return LoginSignupScreen();
-        },
+    return ScreenUtilInit(
+      designSize: Size(360, 712),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: primaryGreen,
+          fontFamily: 'Mono',
+        ),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return MainScreen();
+            }
+            return LoginSignupScreen();
+          },
+        ),
       ),
     );
   }
 }
-
-// class MyPage extends StatelessWidget {
-//   const MyPage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         resizeToAvoidBottomInset: false,
-//         body: Container(
-//           child: Center(
-//             child: Authentication(),
-//           ),
-//         )
-//         // Authentication(),
-//         );
-//   }
-// }
-
-// Widget logo() {
-//   return Image.asset('assets/logo.png', width: 150);
-// }
-
-// class Authentication extends StatelessWidget {
-//   const Authentication({Key? key}) : super(key: key);
-
-//   get builder => null;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder(
-//       stream: FirebaseAuth.instance.authStateChanges(),
-//       builder: (context, snapshot) {
-//         if (!snapshot.hasData) {
-//           return SignInScreen(
-//             headerBuilder: (context, constraints, _) {
-//               return Padding(
-//                 padding: const EdgeInsets.all(20),
-//                 child: AspectRatio(
-//                   aspectRatio: 1,
-//                   child: Image.asset('images/logo.png', width: 150),
-//                 ),
-//               );
-//             },
-//             providerConfigs: [EmailProviderConfiguration()],
-//           );
-//         }
-//         return MainScreen();
-//       },
-//     );
-//   }
-// }

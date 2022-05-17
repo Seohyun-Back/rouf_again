@@ -135,7 +135,8 @@ class _FriendRequestState extends State<FriendRequest> {
                         // 친구 프로필사진
                         leading: CircleAvatar(
                           radius: 18,
-                          backgroundImage: AssetImage('images/profile.jpg'),
+                          backgroundImage:
+                              AssetImage('assets/images/profile.jpg'),
                         ),
                         // 친구 이름
 

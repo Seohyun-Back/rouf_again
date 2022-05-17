@@ -35,12 +35,12 @@ class _TaskState extends State<Task> {
             Center(
               child: Container(
                 padding: EdgeInsets.fromLTRB(15, 10, 0, 17),
-                width: 330,
+                width: MediaQuery.of(context).size.width * 0.8,
                 //height: 150,
 
                 decoration: BoxDecoration(
                   color: widget.selected == true
-                      ? Color(0xffD6D6D6)
+                      ? Color(0xffDFDFDF)
                       : Color(0xfff4f4f4),
                   borderRadius: new BorderRadius.only(
                       topLeft: const Radius.circular(20.0),
@@ -81,14 +81,14 @@ class _TaskState extends State<Task> {
                         CircleAvatar(
                           backgroundColor: Color(0xffb5d096),
                           child: Image.asset(
-                            'images/TaskIcon/${globals.tasks[globals.taskList[widget.taskNum]]}.png',
+                            'assets/images/TaskIcon/${globals.tasks[globals.taskList[widget.taskNum]]}.png',
                             height: 23,
                             width: 23,
                           ),
                         ),
                         SizedBox(width: 18),
                         Container(
-                          width: 130,
+                          width: MediaQuery.of(context).size.width * 0.5,
                           child: Row(
                             children: [
                               Text(

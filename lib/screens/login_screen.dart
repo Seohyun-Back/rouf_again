@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gw/screens/main_screen.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:gw/globals.dart' as globals;
 
 class LoginSignupScreen extends StatefulWidget {
@@ -42,12 +41,14 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     globals.currentUsername = _userData.data()!['userName'];
     globals.currentUid = _userData.data()!['userUID'];
     globals.currentEmail = _userData.data()!['email'];
+    //globals.statusKey = _userData.data()!['statusKey'];
     print(
         'currentUsername: ${globals.currentUsername} \n currentUserUid: ${globals.currentUid} \n currentUserEmail: ${globals.currentEmail}');
   }
 
   @override
   Widget build(BuildContext context) {
+    // print(globals.statusKey);
     return Scaffold(
       backgroundColor: Palette.backgroundColor,
       body: ModalProgressHUD(
@@ -67,7 +68,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   height: 300,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('images/loginlogo.png'),
+                          image: AssetImage('assets/images/loginlogo.png'),
                           fit: BoxFit.fill)),
                   // child: Container(
                   //   padding: EdgeInsets.only(top: 90, left: 20),
@@ -475,8 +476,11 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                 'userName': userName,
                                 'email': userEmail,
                                 'statusKey': 8,
+                                //'friends': null,
+                                //'requests': null,
                               });
 
+                              //globals.currentUsername = userName;
                               if (newUser.user != null) {
                                 Navigator.push(
                                   context,
@@ -506,6 +510,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           if (!isSignupScreen) {
                             _tryValidation();
                             try {
+                              //print(globals.statusKey);
                               globals.statusKey = 8;
                               final newUser = await _authentication
                                   .signInWithEmailAndPassword(
@@ -513,13 +518,23 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                 password: userPassword,
                               );
                               putGlobals();
-
+                              //globals.currentUsername = userName;
+                              //print(globals.currentUsername);
                               if (newUser.user != null) {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(builder: (context) {
+                                //     return MainScreen();
+                                //   }),
+                                // );
                                 setState(() {
                                   showSpinner = false;
                                 });
                               }
                             } catch (e) {
+                              // setState(() {
+                              //   showSpinner = false;
+                              // });
                               print(e);
                             }
                           }
@@ -552,4 +567,3 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     );
   }
 }
-//

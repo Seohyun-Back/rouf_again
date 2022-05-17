@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
+import 'package:gw/component/no_friend.dart';
 import 'package:gw/component/task_list.dart';
 import 'package:gw/screens/friend_status.dart';
 import 'package:gw/screens/sidebar/friend_list.dart';
@@ -9,6 +10,7 @@ import 'package:gw/screens/sidebar/friend_request.dart';
 import 'package:gw/screens/monthly.dart';
 import 'package:gw/screens/sidebar/line_diary.dart';
 import 'package:gw/screens/sidebar/rouf_settings.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'login_screen.dart' as loginscreen;
 
@@ -149,7 +151,7 @@ class _MainScreenState extends State<MainScreen> {
                       children: [
                         IconButton(
                             icon: Image.asset(
-                                'images/TaskIcon/${globals.tasks[i]}.png'),
+                                'assets/images/TaskIcon/${globals.tasks[i]}.png'),
                             iconSize: 20,
                             onPressed: () async {
                               Navigator.pop(dialogContext);
@@ -199,7 +201,7 @@ class _MainScreenState extends State<MainScreen> {
                         children: [
                           IconButton(
                               icon: Image.asset(
-                                  'images/TaskIcon/${globals.tasks[i]}.png'),
+                                  'assets/images/TaskIcon/${globals.tasks[i]}.png'),
                               iconSize: 20,
                               onPressed: () async {
                                 Navigator.pop(dialogContext);
@@ -274,7 +276,8 @@ class _MainScreenState extends State<MainScreen> {
                           //flex: 2,
                           child: CircleAvatar(
                             radius: 27,
-                            backgroundImage: AssetImage('images/profile.jpg'),
+                            backgroundImage:
+                                AssetImage('assets/images/profile.jpg'),
                           ),
                         ),
                         Container(
@@ -478,54 +481,49 @@ class _MainScreenState extends State<MainScreen> {
           onPressed: () {
             addCategory(context);
           }),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-          // child: SingleChildScrollView(
-          //   scrollDirection: Axis.vertical,
-          child: Column(children: [
-            Container(
-                padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
-                child: tapableDate()),
-            const SizedBox(
-              height: 10,
-            ),
-            Center(
-              child: Container(
-                //친구상태창
-                height: 220,
-                width: 330,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.transparent,
-                  ),
+      body: Container(
+        padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
+        // child: SingleChildScrollView(
+        //   scrollDirection: Axis.vertical,
+        child: Column(children: [
+          Container(
+              padding: EdgeInsets.fromLTRB(25, 0, 0, 0), child: tapableDate()),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.02,
+          ),
+          Flexible(
+            child: Container(
+              //친구상태창
+              height: MediaQuery.of(context).size.height * 0.5,
+              width: MediaQuery.of(context).size.width * 0.8,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.transparent,
                 ),
-                child: FutureBuilder(
-                    future: getUID(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData == false) {
-                        return Center(
-                          child: Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
-                              style: TextStyle(
-                                  fontSize: 11, fontWeight: FontWeight.w200)),
-                        );
-                        // CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        return Text(
-                          'Error: ${snapshot.error}',
-                        );
-                      } else {
-                        return FriendStatus();
-                      } //Text(snapshot.data.toString());
-                    }),
               ),
+              child: FutureBuilder(
+                  future: getUID(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData == false) {
+                      return Center(
+                        child: Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
+                            style: TextStyle(
+                                fontSize: 11, fontWeight: FontWeight.w200)),
+                      );
+                      // CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text(
+                        'Error: ${snapshot.error}',
+                      );
+                    } else {
+                      return FriendStatus();
+                    } //Text(snapshot.data.toString());
+                  }),
             ),
-            SafeArea(
-              child: TaskList(),
-            )
-          ]),
-          // ),
-        ),
+          ),
+          TaskList(),
+        ]),
+        // ),
       ),
     );
   }

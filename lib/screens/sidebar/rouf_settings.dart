@@ -1,3 +1,4 @@
+import 'package:gw/screens/sidebar/settings_category/mypage.dart';
 import 'package:flutter/material.dart';
 import 'package:gw/screens/sidebar/settings_category/faq_board.dart';
 import 'package:gw/screens/sidebar/settings_category/notice_board.dart';
@@ -53,12 +54,12 @@ class _RoufSettingsState extends State<RoufSettings> {
                 )),
             onTap: () {
               print("내 정보 is clicked");
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) {
-              //     return FriendRequest();
-              //   }),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return MyPage();
+                }),
+              );
             },
           ),
           Divider(),
@@ -76,7 +77,6 @@ class _RoufSettingsState extends State<RoufSettings> {
                   fontWeight: FontWeight.w400,
                 )),
             onTap: () {
-              print("공지사항 is clicked");
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) {

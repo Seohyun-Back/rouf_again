@@ -79,8 +79,8 @@ class _FriendListState extends State<FriendList> {
                                     // 친구 프로필사진
                                     leading: CircleAvatar(
                                       radius: 18,
-                                      backgroundImage:
-                                          AssetImage('images/profile.jpg'),
+                                      backgroundImage: AssetImage(
+                                          'assets/images/profile.jpg'),
                                     ),
                                     // 친구 이름
 
