@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gw/globals.dart' as globals;
 import 'package:flutter/material.dart';
 
 class LineDiary extends StatefulWidget {
@@ -8,6 +10,18 @@ class LineDiary extends StatefulWidget {
 }
 
 class _LineDiaryState extends State<LineDiary> {
+  String diaryContent = '';
+  final TextEditingController _textController = new TextEditingController();
+  DateTime todayDate = DateTime.now();
+
+  String makeDate() {
+    String date = '';
+    date = todayDate.year.toString() +
+        todayDate.month.toString() +
+        todayDate.day.toString();
+    return date;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,13 +49,47 @@ class _LineDiaryState extends State<LineDiary> {
         child: Container(
             padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
                   height: 3,
                 ),
+                Container(
+                  margin: EdgeInsets.all(8),
+                  child: TextField(
+                    controller: _textController,
+                    onSubmitted: _handleSubmitted,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: '글자수는 150자 미만으로 적어주세요',
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                  ),
+                  onPressed: () {
+                    _handleSubmitted;
+                  },
+                  child: Text('작성하기/다시쓰기'),
+                )
               ],
             )),
       ),
     );
+  }
+
+  Future<void> _handleSubmitted(String text) async {
+    setState(() {
+      diaryContent = text;
+    });
+    print(globals.currentUid);
+    FirebaseFirestore.instance
+        .collection('user/${globals.currentUid}/data/${makeDate()}/diary')
+        .doc('diary')
+        .set({
+      'content': diaryContent,
+    });
   }
 }
