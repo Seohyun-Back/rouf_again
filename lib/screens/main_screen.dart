@@ -467,7 +467,7 @@ class _MainScreenState extends State<MainScreen> {
                 //친구상태창
                 // height: MediaQuery.of(context).size.height * 0.37,
                 // width: MediaQuery.of(context).size.width * 0.8,
-                flex: 2,
+                flex: 1,
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -491,6 +491,9 @@ class _MainScreenState extends State<MainScreen> {
                         } //Text(snapshot.data.toString());
                       }),
                 )),
+          ),
+          SizedBox(
+            height: 10,
           ),
           Expanded(
             flex: 3,

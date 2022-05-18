@@ -20,7 +20,7 @@ class _FriendStatusState extends State<FriendStatus> {
     // print('\n \n currentUsername은 지금 ${globals.currentUsername}');
     // print('\n \n currentEmail은 지금 ${globals.currentEmail}');
     return Container(
-        height: MediaQuery.of(context).size.height * 0.37,
+        height: MediaQuery.of(context).size.height * 0.3,
         width: MediaQuery.of(context).size.width * 0.9,
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: Column(
@@ -45,7 +45,7 @@ class _FriendStatusState extends State<FriendStatus> {
                 final docs = snapshot.data!.docs;
 
                 return Container(
-                  height: MediaQuery.of(context).size.height * 0.35,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   child: docs.length != 0
                       ? ListView.builder(
                           scrollDirection: Axis.vertical,
