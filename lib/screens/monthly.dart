@@ -24,7 +24,9 @@ class _MonthlyWorkState extends State<MonthlyWork> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0), // AppBar 사이즈 지정
+        preferredSize: Size.fromHeight(MediaQuery.of(context).size.width > 500
+            ? 50.0
+            : 35.0), // AppBar 사이즈 지정
         child: AppBar(
           backgroundColor: Colors.white, // AppBar 색상 지정
           title: Text('먼슬리', style: TextStyle(color: Colors.black)),
@@ -43,12 +45,18 @@ class _MonthlyWorkState extends State<MonthlyWork> {
         ),
       ),
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 23.0),
+        //margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 23.0),
+        margin: MediaQuery.of(context).size.width > 500
+            ? EdgeInsets.symmetric(horizontal: 16.0)
+            : EdgeInsets.symmetric(horizontal: 0),
         child: Center(
           child: Column(
             children: [
               Expanded(
                 child: Container(
+                  margin: MediaQuery.of(context).size.width > 500
+                      ? EdgeInsets.symmetric(horizontal: 80.0)
+                      : EdgeInsets.symmetric(horizontal: 0),
                   child: CalendarCarousel<Event>(
                     onDayPressed: (DateTime date, List<Event> events) {
                       this.setState(() => selectedDate = date);
@@ -74,6 +82,7 @@ class _MonthlyWorkState extends State<MonthlyWork> {
                     todayButtonColor: Color.fromARGB(255, 245, 242, 242),
                     weekFormat: false,
                     height: MediaQuery.of(context).size.height * 0.42,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     selectedDateTime: selectedDate,
                     daysHaveCircularBorder: true,
 
@@ -82,7 +91,7 @@ class _MonthlyWorkState extends State<MonthlyWork> {
                 ),
               ),
               Container(
-                  //padding: EdgeInsets.fromLTRB(20, 18, 20, 20),
+                  padding: EdgeInsets.fromLTRB(20, 18, 20, 20),
                   height: MediaQuery.of(context).size.height * 0.45,
                   width: MediaQuery.of(context).size.width,
                   // decoration: BoxDecoration(
@@ -103,7 +112,18 @@ class _MonthlyWorkState extends State<MonthlyWork> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return CircularProgressIndicator();
+                            return Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.277,
+                                child: Center(
+                                  child: Text(
+                                    "기록된 활동이 없습니다.",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ));
                           }
                           return Expanded(
                               flex: 2,

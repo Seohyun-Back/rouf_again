@@ -50,15 +50,16 @@ class _TaskListState extends State<TaskList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: globals.taskList.length != 0
-            ? FutureBuilder(
-                future: myFuture,
-                builder: (context, snapshot) {
-                  return Container(
-                    height: MediaQuery.of(context).size.height * 0.55,
-                    color: Colors.white,
-                    child: Expanded(
+    return FutureBuilder(
+        future: myFuture,
+        builder: (context, snapshot) {
+          return Container(
+              height: MediaQuery.of(context).size.height * 0.55,
+              width: MediaQuery.of(context).size.width * 0.9,
+              padding: EdgeInsets.symmetric(vertical: 10),
+              color: Colors.white,
+              child: globals.taskList.length != 0
+                  ? Expanded(
                       child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: globals.taskList.length,
@@ -83,16 +84,10 @@ class _TaskListState extends State<TaskList> {
                                   } else {
                                     globals.eachtimerStartKey[
                                         globals.taskList[index]] = true;
-                                    // globals.eachtimerStartKey[globals.taskList[index]]
-                                    //     ? globals.eachtimerStartKey[
-                                    //         globals.taskList[index]] = false
-                                    //     : globals.eachtimerStartKey[
-                                    //         globals.taskList[index]] = true;
                                     setState(() {
                                       selectedIndex == index
                                           ? selectedIndex = -1
                                           : selectedIndex = index;
-                                      //handleStartStop(index, globals.taskList[index]);
                                     });
                                   }
                                 },
@@ -100,9 +95,6 @@ class _TaskListState extends State<TaskList> {
                                   taskNum: index,
                                   selected: selectedIndex == index,
                                 ),
-                                // tileColor: selectedIndex == index
-                                //     ? Color(0xfff4f4f4)
-                                //     : Color(0x000000),
                               ),
                               background: Container(color: Colors.white),
                               confirmDismiss: (direction) {
@@ -155,9 +147,6 @@ class _TaskListState extends State<TaskList> {
                                             ),
                                           ]);
                                     });
-
-                                // }
-                                //return Future.value(false);
                               },
                               onDismissed: (direction) {
                                 setState(() {
@@ -195,17 +184,16 @@ class _TaskListState extends State<TaskList> {
                           }
                         },
                       ),
-                    ),
-                  );
-                })
-            : Container(
-                height: 300,
-                alignment: Alignment.bottomCenter,
-                child: Center(
-                  child: Text('아래 버튼을 통해 태스크를 추가하고 루프를 즐겨보세요!',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                ),
-              ));
+                    )
+                  : Container(
+                      height: 300,
+                      alignment: Alignment.bottomCenter,
+                      child: Center(
+                        child: Text('아래 버튼을 통해 태스크를 추가하고 루프를 즐겨보세요!',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w500)),
+                      ),
+                    ));
+        });
   }
 }

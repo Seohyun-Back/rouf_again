@@ -1,19 +1,17 @@
+//import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'dart:math';
+
+import 'package:gw/screens/sidebar/line_diary.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/auth.dart';
-import 'package:gw/component/no_friend.dart';
 import 'package:gw/component/task_list.dart';
 import 'package:gw/screens/friend_status.dart';
 import 'package:gw/screens/sidebar/friend_list.dart';
 import 'package:gw/screens/sidebar/friend_request.dart';
 import 'package:gw/screens/monthly.dart';
-import 'package:gw/screens/sidebar/line_diary.dart';
 import 'package:gw/screens/sidebar/rouf_settings.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'login_screen.dart' as loginscreen;
-
 import '../../globals.dart' as globals;
 
 class MainScreen extends StatefulWidget {
@@ -26,6 +24,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final _authentication = FirebaseAuth.instance;
   DateTime selectedDate = DateTime.now();
+  // int alarmId = 1;
+  // DateTime today = DateTime.now();
   List<String> listOfDays = ["월", "화", "수", "목", "금", "토", "일"];
 
   User? loggedUser;
@@ -244,7 +244,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // globals.initGlobals();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -252,6 +251,7 @@ class _MainScreenState extends State<MainScreen> {
         preferredSize: Size.fromHeight(50.0), // AppBar 사이즈 지정
         child: AppBar(
           backgroundColor: Colors.white, // AppBar 색상 지정
+
           iconTheme: IconThemeData(color: Color.fromARGB(255, 32, 32, 32)),
           elevation: 0.0,
           centerTitle: false,
@@ -333,39 +333,6 @@ class _MainScreenState extends State<MainScreen> {
                         )
                       ],
                     ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     print('Tapped Friend List!');
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(builder: (context) {
-                    //         return FriendList();
-                    //       }),
-                    //     );
-                    //   },
-                    //   child: Container(
-                    //     padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
-                    //     child: Row(
-                    //         mainAxisAlignment: MainAxisAlignment.start,
-                    //         children: [
-                    //           Text(
-                    //             '친구 ',
-                    //             style: TextStyle(
-                    //               fontSize: 16,
-                    //               fontWeight: FontWeight.w500,
-                    //             ),
-                    //           ),
-                    //           if (globals.currentUid == '')
-                    //             Text('0',
-                    //                 style: TextStyle(
-                    //                   fontSize: 16,
-                    //                   fontWeight: FontWeight.w500,
-                    //                 ))
-                    //           else if (globals.currentUid != '')
-                    //             friendNumStreamBuilder(),
-                    //         ]),
-                    //   ),
-                    // ),
                   ],
                 )),
                 decoration: BoxDecoration(
@@ -467,8 +434,12 @@ class _MainScreenState extends State<MainScreen> {
                     fontWeight: FontWeight.w500,
                   )),
               onTap: () {
-                globals.initGlobals();
+                FirebaseFirestore.instance
+                    .collection('user')
+                    .doc(globals.currentUid)
+                    .update({'statusKey': 8});
                 FirebaseAuth.instance.signOut();
+                globals.initGlobals();
                 print("Logout is clicked");
               },
             ),
@@ -488,69 +459,48 @@ class _MainScreenState extends State<MainScreen> {
         child: Column(children: [
           Container(
               padding: EdgeInsets.fromLTRB(25, 0, 0, 0), child: tapableDate()),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
+          const SizedBox(
+            height: 10,
           ),
-          Flexible(
-            child: Container(
-              //친구상태창
-              height: MediaQuery.of(context).size.height * 0.5,
-              width: MediaQuery.of(context).size.width * 0.8,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.transparent,
-                ),
-              ),
-              child: FutureBuilder(
-                  future: getUID(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData == false) {
-                      return Center(
-                        child: Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
-                            style: TextStyle(
-                                fontSize: 11, fontWeight: FontWeight.w200)),
-                      );
-                      // CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text(
-                        'Error: ${snapshot.error}',
-                      );
-                    } else {
-                      return FriendStatus();
-                    } //Text(snapshot.data.toString());
-                  }),
-            ),
+          Center(
+            child: Expanded(
+                //친구상태창
+                // height: MediaQuery.of(context).size.height * 0.37,
+                // width: MediaQuery.of(context).size.width * 0.8,
+                flex: 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.transparent,
+                    ),
+                  ),
+                  child: FutureBuilder(
+                      future: getUID(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData == false) {
+                          return Text('친구를 추가하고 실시간으로 친구들과 일상을 공유해보세요!',
+                              style: TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.w200));
+                          // CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text(
+                            'Error: ${snapshot.error}',
+                          );
+                        } else {
+                          return FriendStatus();
+                        } //Text(snapshot.data.toString());
+                      }),
+                )),
           ),
-          TaskList(),
+          Expanded(
+            flex: 3,
+            // height: MediaQuery.of(context).size.height * 0.48,
+            // width: MediaQuery.of(context).size.width * 0.9,
+            child: TaskList(),
+          ),
         ]),
         // ),
       ),
     );
-  }
-
-  StreamBuilder<QuerySnapshot<Map<String, dynamic>>> friendNumStreamBuilder() {
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('user/${globals.currentUid}/friends')
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.hasError) {
-            return Text(
-              'Error: ${snapshot.error}',
-            );
-          }
-
-          final docs = snapshot.data!.docs;
-          return Text(docs.length.toString(),
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ));
-        });
   }
 }
