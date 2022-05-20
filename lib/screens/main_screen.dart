@@ -322,7 +322,7 @@ class _MainScreenState extends State<MainScreen> {
                                         return Text(snapshot.data.toString(),
                                             style: TextStyle(
                                               fontFamily: 'Mono',
-                                              fontSize: 17,
+                                              fontSize: 13,
                                               fontWeight: FontWeight.w300,
                                             ));
                                       }

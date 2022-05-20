@@ -117,7 +117,7 @@ class _FriendStatusState extends State<FriendStatus> {
                                       // 친구 이름
                                       title: Text(
                                           docs[index]['name'] +
-                                              '은(는) ' +
+                                              ' 은(는) ' +
                                               globals.action[actionKey],
                                           style: TextStyle(fontSize: 16)),
                                     ));
