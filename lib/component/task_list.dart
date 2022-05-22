@@ -137,8 +137,24 @@ class _TaskListState extends State<TaskList> {
                                                         0.0),
                                               ),
                                               onPressed: () {
-                                                return Navigator.of(context)
-                                                    .pop(true);
+                                                if (selectedIndex == index) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              "실행중인 카테고리는 삭제할 수 없습니다.")));
+                                                  return Navigator.of(context)
+                                                      .pop(false);
+                                                } else {
+                                                  globals.todos[globals
+                                                      .taskList[index]] = [];
+                                                  globals.eachTaskKey[globals
+                                                      .taskList[index]] = 0;
+                                                  globals.eachTaskTimer[globals
+                                                          .taskList[index]] =
+                                                      "00H 00m";
+                                                  return Navigator.of(context)
+                                                      .pop(true);
+                                                }
                                               },
                                               child: const Text('삭제',
                                                   style: TextStyle(

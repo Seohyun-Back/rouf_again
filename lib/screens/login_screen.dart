@@ -456,9 +456,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           borderRadius: BorderRadius.circular(50)),
                       child: GestureDetector(
                         onTap: () async {
-                          setState(() {
-                            showSpinner = true;
-                          });
+                          // setState(() {
+                          //   showSpinner = true;
+                          // });
                           if (isSignupScreen) {
                             _tryValidation();
                             try {
@@ -490,9 +490,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                     return MainScreen();
                                   }),
                                 );
-                                setState(() {
-                                  showSpinner = false;
-                                });
+                                // setState(() {
+                                //   showSpinner = false;
+                                // });
                               }
                             } catch (e) {
                               print(e);
@@ -527,9 +527,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                 //     return MainScreen();
                                 //   }),
                                 // );
-                                setState(() {
-                                  showSpinner = false;
-                                });
+                                // setState(() {
+                                //   showSpinner = false;
+                                // });
                               }
                             } catch (e) {
                               // setState(() {
