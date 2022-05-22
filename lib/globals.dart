@@ -104,7 +104,7 @@ void initGlobals() {
   ];
   input = '';
   taskList = [];
-  eachTaskKey = [0, 0, 0, 0, 0, 0, 0, 0];
+  eachTaskKey = [0, 0, 0, 0, 0, 0, 0, 0]; // 태스크별 투두 갯수
   eachTaskTimer = [
     "00H 00m",
     "00H 00m",
